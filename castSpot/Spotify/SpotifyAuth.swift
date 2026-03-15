@@ -13,11 +13,15 @@ class SpotifyAuth: ObservableObject {
     private let scopes = "user-read-playback-state user-modify-playback-state"
 
     @Published var isAuthenticated = false
+    @Published var currentUser: SpotifyUser?
 
     private var pendingVerifier: String?
 
     private init() {
         isAuthenticated = loadStoredTokens() != nil
+        if isAuthenticated {
+            Task { await fetchCurrentUser() }
+        }
     }
 
     // MARK: - OAuth PKCE
@@ -69,6 +73,17 @@ class SpotifyAuth: ObservableObject {
     func signOut() {
         deleteFromKeychain(key: "castspot_tokens")
         isAuthenticated = false
+        currentUser = nil
+    }
+
+    // MARK: - User Profile
+
+    func fetchCurrentUser() async {
+        guard let token = try? await validAccessToken() else { return }
+        var req = URLRequest(url: URL(string: "https://api.spotify.com/v1/me")!)
+        req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        guard let (data, _) = try? await URLSession.shared.data(for: req) else { return }
+        currentUser = try? JSONDecoder().decode(SpotifyUser.self, from: data)
     }
 
     // MARK: - Token Exchange
@@ -116,6 +131,7 @@ class SpotifyAuth: ObservableObject {
         if let data = try? JSONEncoder().encode(stored) {
             saveToKeychain(key: "castspot_tokens", data: data)
             isAuthenticated = true
+            Task { await fetchCurrentUser() }
         }
     }
 
@@ -189,4 +205,18 @@ struct StoredTokens: Codable {
 
 enum AuthError: Error {
     case notAuthenticated
+}
+
+struct SpotifyUser: Decodable {
+    let displayName: String?
+    let images: [SpotifyImage]?
+    var profileImageURL: URL? { images?.first?.url }
+    enum CodingKeys: String, CodingKey {
+        case displayName = "display_name"
+        case images
+    }
+}
+
+struct SpotifyImage: Decodable {
+    let url: URL
 }

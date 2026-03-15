@@ -1,7 +1,20 @@
 import AppKit
 import Carbon.HIToolbox
 
+// MARK: - HotKey Constants
+
+enum HotKey {
+    static let codeKey = "hotKeyCode"
+    static let modifiersKey = "hotKeyModifiers"
+    static let defaultCode: Int = 49    // kVK_Space
+    static let defaultModifiers: Int = 4096 // controlKey
+}
+
+// MARK: - AppDelegate
+
 class AppDelegate: NSObject, NSApplicationDelegate {
+    static weak var shared: AppDelegate?
+
     private var statusItem: NSStatusItem?
     var panelController: SearchPanelController?
 
@@ -12,6 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     nonisolated(unsafe) static var onHotKey: (() -> Void)?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        AppDelegate.shared = self
         NSApp.setActivationPolicy(.accessory)
         setupStatusItem()
         panelController = SearchPanelController()
@@ -97,11 +111,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func registerHotKey() {
         let defaults = UserDefaults.standard
-        // Default: Control+Space (kVK_Space=49, controlKey=4096)
-        let rawKeyCode = defaults.integer(forKey: "hotKeyCode")
-        let keyCode = UInt32(rawKeyCode == 0 ? 49 : rawKeyCode)
-        let rawModifiers = defaults.integer(forKey: "hotKeyModifiers")
-        let modifiers = UInt32(rawModifiers == 0 ? 4096 : rawModifiers)
+        let rawKeyCode = defaults.integer(forKey: HotKey.codeKey)
+        let keyCode = UInt32(rawKeyCode == 0 ? HotKey.defaultCode : rawKeyCode)
+        let rawModifiers = defaults.integer(forKey: HotKey.modifiersKey)
+        let modifiers = UInt32(rawModifiers == 0 ? HotKey.defaultModifiers : rawModifiers)
 
         AppDelegate.onHotKey = { [weak self] in
             DispatchQueue.main.async { self?.togglePanel() }
