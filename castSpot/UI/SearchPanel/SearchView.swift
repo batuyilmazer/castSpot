@@ -4,6 +4,7 @@ struct SearchView: View {
     @StateObject private var search = SpotifySearch()
     @State private var query = ""
     @State private var selectedIndex = 0
+    @State private var mousePositionAtLastUpdate: CGPoint? = nil
     @FocusState private var focused: Bool
 
     var body: some View {
@@ -19,6 +20,8 @@ struct SearchView: View {
             search.search(query: newValue)
         }
         .onChange(of: search.results) { _, results in
+            selectedIndex = 0
+            mousePositionAtLastUpdate = NSEvent.mouseLocation
             NotificationCenter.default.post(name: .resultsCountChanged, object: results.count)
         }
         .onAppear { focused = true }
@@ -71,7 +74,10 @@ struct SearchView: View {
                 TrackRow(track: track, isSelected: index == selectedIndex)
                     .contentShape(Rectangle())
                     .onTapGesture { play(track) }
-                    .onHover { hovering in if hovering { selectedIndex = index } }
+                    .onHover { hovering in
+                        guard hovering, NSEvent.mouseLocation != mousePositionAtLastUpdate else { return }
+                        selectedIndex = index
+                    }
             }
         }
         .padding(.vertical, 8)

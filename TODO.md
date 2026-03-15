@@ -1,44 +1,60 @@
-## TODO
+### TODO
 ---
-- **BUGFIX: Şarkı paused iken şarkı değişmiyor**
-  - Spotify açık.
-  - Şarkı açık ancak çalmıyor, paused.
-  - castSpot ile şarkı aratıp enter'la.
-  - Şarkı değişmiyor veya çalmaya başlamıyor.
-  - Expected Behaviour: 
-    - Farklı şarkı aratılırsa şarkının değişip çalmaya başlaması,
-    - Aynı şarkı açılırsa en başa sarıp çalmaya başlaması.
+
+- **BUGFIX: Sometimes track doesn’t change while paused**
+  - Don't know what triggers this. maybe inactivity too long.
+  - Spotify is open.
+  - A track is loaded but not playing, it’s paused.
+  - Search a track with castSpot and hit Enter.
+  - The track doesn’t change or start playing.
+  - **Expected behaviour:**
+    - If a different track is selected, it should switch to that track and start playing.
+    - If the same track is selected, it should seek back to the start and begin playing.
+
 ---
-- **BUGFIX: İlk öğe her zaman focused olmayabiliyor**
-  - Arama yaparken focus alttaki öğeye kayabiliyor.
-  - Hata sebebi: Focus, ilk index'lenen öğeye geçiyor. Yeni index'lenen öğe en üstte olsa bile focus'u almıyor.
+
+- **BUGFIX: First item is not always focused (FIXED)** 
+  - While searching, focus can jump to the item below.
+  - Root cause: Focus passes to list element behind mouse cursor, even if mouse cursor is not moving.
+
 ---
-- **Search bar bazen açılmıyor**
-  - Sorunun kaynağını analiz et (event listener, state yönetimi, focus/blur davranışları, conditional render vb.).
-  - Reprodüksiyon adımlarını not al ve stabil şekilde tekrarlanabilir hale getir.
-  - Gerekirse debouncing/throttling veya async çağrıları gözden geçir.
-  - Kalıcı çözümü uygula ve ilgili alanlar için test ekle.
+
+- **Search bar sometimes does not open**
+  - Analyze the root cause (event listeners, state management, focus/blur behavior, conditional rendering, etc.).
+  - Note down the reproduction steps and make sure it’s reproducible in a stable way.
+  - If needed, review debouncing/throttling and async calls.
+  - Implement a permanent fix and add tests for the relevant areas.
+
 ---
-- **Access token süresi dolduğunda hata yönetimi**
-  - Access token öldüğünde (expired/invalid) hata fırlatılmayan yerleri tespit et.
-  - Ortak bir error handling/refresh mekanizması tasarla (ör. interceptor, middleware, hook).
-  - Uygun durumlarda otomatik token yenilemeyi, değilse kontrollü logout akışını uygula.
-  - Kullanıcıya gösterilecek hata/uyarı mesajlarını ve yönlendirmeyi belirle.
+
+- **Error handling when access token expires**
+  - Identify places where no error is thrown when the access token is dead (expired/invalid).
+  - Design a shared error handling/refresh mechanism (e.g. interceptor, middleware, hook).
+  - Implement automatic token refresh where appropriate, and a controlled logout flow otherwise.
+  - Define the error/warning messages and guidance shown to the user.
+
 ---
-- **Login akışını iyileştir**
-  - Mevcut login akışında login olduktan sonra kullanıcıyı bilgilendirecek görsel uyaran yok.
-  - Refresh&Access Token mantığının elden geçmesi lazım.
+
+- **Improve login flow**
+  - In the current login flow, there is no visual feedback informing the user after they log in.
+  - The Refresh & Access Token logic needs to be revisited.
+
 ---
-- **Açılır Pencerenin konumu ayarlanmıyor**
-  - Pencere konumu ayarlardan preset'ler arasından seçilebilmeli.
-  - Pencere konumu elle ayarlanabilmeli.
-  - Çoklu monitör setup'larıyla uyumlu hâle getirilmeli.
-  - Pencere konumu oturumlar arasında persistent olmalı.
+
+- **Popup window position is not configurable**
+  - Window position should be selectable from presets in the settings.
+  - Window position should be manually adjustable.
+  - It should work correctly with multi‑monitor setups.
+  - Window position should persist across sessions.
+
 ---
+
 - **Search Tokens** (Concept)
-  - Şarkıları belirli saniyelerden açmak için tokenized search
-    - `Many Men :10s` - 10. saniyeden başlatır
-  - Müzisyene göre arama
-    - `Many Men :Fifty Cent`- Fifty Cent'in şarkılarını filtreler.
+  - Tokenized search to start tracks from specific seconds:
+    - `Many Men :10s` – starts from the 10th second.
+  - Search by artist:
+    - `Many Men :Fifty Cent` – filters to tracks by Fifty Cent.
+
 ---
-- **Animasyonlar**
+
+- **Animations**
