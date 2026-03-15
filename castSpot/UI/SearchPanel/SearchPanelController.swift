@@ -2,7 +2,7 @@ import AppKit
 import SwiftUI
 
 class SearchPanelController: NSObject {
-    private var panel: NSPanel?
+    private var panel: SearchPanel?
 
     private let panelWidth: CGFloat = 620
     private let searchBarHeight: CGFloat = 60
@@ -12,7 +12,7 @@ class SearchPanelController: NSObject {
     override init() {
         super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(onResultsChanged(_:)), name: .resultsCountChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onCloseRequested), name: .closeSearchPanel, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(closePanel), name: .closeSearchPanel, object: nil)
     }
 
     // MARK: - Public Interface
@@ -38,6 +38,9 @@ class SearchPanelController: NSObject {
 
     private func show(content: AnyView, height: CGFloat) {
         // Replace existing panel
+        if let old = panel {
+            NotificationCenter.default.removeObserver(self, name: NSWindow.didResignKeyNotification, object: old)
+        }
         panel?.close()
 
         let p = makePanel(height: height)
@@ -49,10 +52,10 @@ class SearchPanelController: NSObject {
         NSApp.activate(ignoringOtherApps: true)
     }
 
-    private func makePanel(height: CGFloat) -> NSPanel {
-        let p = NSPanel(
+    private func makePanel(height: CGFloat) -> SearchPanel {
+        let p = SearchPanel(
             contentRect: NSRect(x: 0, y: 0, width: panelWidth, height: height),
-            styleMask: [.nonactivatingPanel, .fullSizeContentView, .borderless],
+            styleMask: [.fullSizeContentView, .borderless],
             backing: .buffered,
             defer: false
         )
@@ -66,7 +69,7 @@ class SearchPanelController: NSObject {
 
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(onPanelResignKey),
+            selector: #selector(closePanel),
             name: NSWindow.didResignKeyNotification,
             object: p
         )
@@ -113,9 +116,4 @@ class SearchPanelController: NSObject {
         }
     }
 
-    // MARK: - Observers
-
-    @objc private func onCloseRequested() { closePanel() }
-
-    @objc private func onPanelResignKey() { closePanel() }
 }

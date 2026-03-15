@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		881D18A02F66E33C00C66BA1 /* castSpot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = castSpot.xcodeproj; sourceTree = "<group>"; };
 		884382D32F66D4D300916CC0 /* castSpot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = castSpot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		884382E32F66D50000916CC0 /* castSpot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = castSpot.xcodeproj; sourceTree = "<group>"; };
 		884383172F66DAA200916CC0 /* castSpot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = castSpot.xcodeproj; sourceTree = "<group>"; };
@@ -31,6 +32,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		881D18A42F66E33C00C66BA1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		884382CA2F66D4D300916CC0 = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +125,10 @@
 				{
 					ProductGroup = 884383192F66DAA200916CC0 /* Products */;
 					ProjectRef = 884383172F66DAA200916CC0 /* castSpot.xcodeproj */;
+				},
+				{
+					ProductGroup = 881D18A42F66E33C00C66BA1 /* Products */;
+					ProjectRef = 881D18A02F66E33C00C66BA1 /* castSpot.xcodeproj */;
 				},
 				{
 					ProductGroup = 884382E52F66D50000916CC0 /* Products */;
