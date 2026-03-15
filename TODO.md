@@ -1,5 +1,18 @@
 ## TODO
 ---
+- **BUGFIX: Şarkı paused iken şarkı değişmiyor**
+  - Spotify açık.
+  - Şarkı açık ancak çalmıyor, paused.
+  - castSpot ile şarkı aratıp enter'la.
+  - Şarkı değişmiyor veya çalmaya başlamıyor.
+  - Expected Behaviour: 
+    - Farklı şarkı aratılırsa şarkının değişip çalmaya başlaması,
+    - Aynı şarkı açılırsa en başa sarıp çalmaya başlaması.
+---
+- **BUGFIX: İlk öğe her zaman focused olmayabiliyor**
+  - Arama yaparken focus alttaki öğeye kayabiliyor.
+  - Hata sebebi: Focus, ilk index'lenen öğeye geçiyor. Yeni index'lenen öğe en üstte olsa bile focus'u almıyor.
+---
 - **Search bar bazen açılmıyor**
   - Sorunun kaynağını analiz et (event listener, state yönetimi, focus/blur davranışları, conditional render vb.).
   - Reprodüksiyon adımlarını not al ve stabil şekilde tekrarlanabilir hale getir.
@@ -14,3 +27,18 @@
 ---
 - **Login akışını iyileştir**
   - Mevcut login akışında login olduktan sonra kullanıcıyı bilgilendirecek görsel uyaran yok.
+  - Refresh&Access Token mantığının elden geçmesi lazım.
+---
+- **Açılır Pencerenin konumu ayarlanmıyor**
+  - Pencere konumu ayarlardan preset'ler arasından seçilebilmeli.
+  - Pencere konumu elle ayarlanabilmeli.
+  - Çoklu monitör setup'larıyla uyumlu hâle getirilmeli.
+  - Pencere konumu oturumlar arasında persistent olmalı.
+---
+- **Search Tokens** (Concept)
+  - Şarkıları belirli saniyelerden açmak için tokenized search
+    - `Many Men :10s` - 10. saniyeden başlatır
+  - Müzisyene göre arama
+    - `Many Men :Fifty Cent`- Fifty Cent'in şarkılarını filtreler.
+---
+- **Animasyonlar**
