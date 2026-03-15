@@ -80,8 +80,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func disconnectSpotify() { SpotifyAuth.shared.signOut() }
 
     @objc private func openSettings() {
-        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-        NSApp.activate(ignoringOtherApps: true)
+        NSApp.openSettings()
     }
 
     // MARK: - URL Callback (OAuth)
