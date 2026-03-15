@@ -48,8 +48,9 @@ class SearchPanelController: NSObject {
         self.panel = p
 
         position(p)
+        // Activate the app first so the panel can become key
+        NSRunningApplication.current.activate(options: [.activateIgnoringOtherApps])
         p.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
     }
 
     private func makePanel(height: CGFloat) -> SearchPanel {

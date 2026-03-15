@@ -113,7 +113,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             eventKind: UInt32(kEventHotKeyPressed)
         )
         InstallEventHandler(
-            GetApplicationEventTarget(),
+            GetEventDispatcherTarget(),
             { _, _, _ -> OSStatus in
                 DispatchQueue.main.async { AppDelegate.onHotKey?() }
                 return noErr
@@ -123,7 +123,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Signature "csSp" as UInt32
         let hotKeyID = EventHotKeyID(signature: 0x6373_5370, id: 1)
-        RegisterEventHotKey(keyCode, modifiers, hotKeyID, GetApplicationEventTarget(), 0, &hotKeyRef)
+        RegisterEventHotKey(keyCode, modifiers, hotKeyID, GetEventDispatcherTarget(), 0, &hotKeyRef)
     }
 
     func reregisterHotKey() {
