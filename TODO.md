@@ -1,0 +1,16 @@
+## TODO
+---
+- **Search bar bazen açılmıyor**
+  - Sorunun kaynağını analiz et (event listener, state yönetimi, focus/blur davranışları, conditional render vb.).
+  - Reprodüksiyon adımlarını not al ve stabil şekilde tekrarlanabilir hale getir.
+  - Gerekirse debouncing/throttling veya async çağrıları gözden geçir.
+  - Kalıcı çözümü uygula ve ilgili alanlar için test ekle.
+---
+- **Access token süresi dolduğunda hata yönetimi**
+  - Access token öldüğünde (expired/invalid) hata fırlatılmayan yerleri tespit et.
+  - Ortak bir error handling/refresh mekanizması tasarla (ör. interceptor, middleware, hook).
+  - Uygun durumlarda otomatik token yenilemeyi, değilse kontrollü logout akışını uygula.
+  - Kullanıcıya gösterilecek hata/uyarı mesajlarını ve yönlendirmeyi belirle.
+---
+- **Login akışını iyileştir**
+  - Mevcut login akışında login olduktan sonra kullanıcıyı bilgilendirecek görsel uyaran yok.

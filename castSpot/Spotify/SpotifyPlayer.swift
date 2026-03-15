@@ -1,23 +1,18 @@
 import Foundation
 
 enum SpotifyPlayer {
-    /// Plays a track in the Spotify macOS app via AppleScript.
-    /// Launches Spotify if it isn't already running.
+    /// Plays a track via the Spotify Web API (requires Premium).
     static func play(track: Track) {
-        let uri = track.uri
-        // Run on a background thread so AppleScript delay doesn't block UI
-        Task.detached(priority: .userInitiated) {
-            let script = """
-            tell application "Spotify"
-                if not running then
-                    activate
-                    delay 2
-                end if
-                play track "\(uri)"
-            end tell
-            """
-            var error: NSDictionary?
-            NSAppleScript(source: script)?.executeAndReturnError(&error)
+        Task {
+            guard let token = try? await SpotifyAuth.shared.validAccessToken() else { return }
+
+            var request = URLRequest(url: URL(string: "https://api.spotify.com/v1/me/player/play")!)
+            request.httpMethod = "PUT"
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: ["uris": [track.uri]])
+
+            _ = try? await URLSession.shared.data(for: request)
         }
     }
 }

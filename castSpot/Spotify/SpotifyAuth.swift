@@ -56,7 +56,14 @@ class SpotifyAuth: ObservableObject {
         if let expiry = stored.expiryDate, expiry > Date() {
             return stored.accessToken
         }
-        return try await refresh(using: stored.refreshToken)
+        do {
+            return try await refresh(using: stored.refreshToken)
+        } catch is CancellationError {
+            throw CancellationError()
+        } catch {
+            signOut()
+            throw AuthError.notAuthenticated
+        }
     }
 
     func signOut() {

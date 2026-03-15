@@ -37,11 +37,11 @@ class SpotifySearch: ObservableObject {
 
             do {
                 let token = try await SpotifyAuth.shared.validAccessToken()
+                guard !Task.isCancelled else { return }
                 let tracks = try await fetchTracks(query: trimmed, token: token)
                 cache.setObject(tracks as NSArray, forKey: trimmed as NSString)
                 results = tracks
             } catch {
-                // Token expired and refresh failed — results stay empty
             }
         }
     }
@@ -64,7 +64,12 @@ class SpotifySearch: ObservableObject {
         var request = URLRequest(url: components.url!)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
-        let (data, _) = try await URLSession.shared.data(for: request)
+        let (data, urlResponse) = try await URLSession.shared.data(for: request)
+
+        if let http = urlResponse as? HTTPURLResponse, http.statusCode != 200 {
+            throw URLError(.badServerResponse)
+        }
+
         let response = try JSONDecoder().decode(SearchResponse.self, from: data)
 
         return response.tracks.items.map { item in
