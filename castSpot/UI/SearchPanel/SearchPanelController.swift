@@ -8,6 +8,7 @@ class SearchPanelController: NSObject {
     private let searchBarHeight: CGFloat = 60
     private let rowHeight: CGFloat = 52
     private let resultsPadding: CGFloat = 17   // 8 top + 8 bottom + 1 divider
+    private let topOffset: CGFloat = 180       // distance from top of screen to panel
 
     override init() {
         super.init()
@@ -97,9 +98,22 @@ class SearchPanelController: NSObject {
     private func position(_ panel: NSPanel) {
         guard let screen = NSScreen.main else { return }
         let sf = screen.visibleFrame
-        let x = sf.midX - panelWidth / 2
-        let y = sf.maxY - panel.frame.height - 180
-        panel.setFrameOrigin(NSPoint(x: x, y: y))
+        let pw = panelWidth
+        let ph = panel.frame.height
+        let edgePadding: CGFloat = 20
+
+        let origin: NSPoint
+        switch PanelPosition.current {
+        case .topCenter:
+            origin = NSPoint(x: sf.midX - pw / 2, y: sf.maxY - ph - topOffset)
+        case .topLeft:
+            origin = NSPoint(x: sf.minX + edgePadding, y: sf.maxY - ph - topOffset)
+        case .topRight:
+            origin = NSPoint(x: sf.maxX - pw - edgePadding, y: sf.maxY - ph - topOffset)
+        case .screenCenter:
+            origin = NSPoint(x: sf.midX - pw / 2, y: sf.midY - ph / 2)
+        }
+        panel.setFrameOrigin(origin)
     }
 
     // MARK: - Dynamic Resize

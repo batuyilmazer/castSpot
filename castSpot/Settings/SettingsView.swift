@@ -227,6 +227,7 @@ struct SettingsView: View {
     @State private var isAccessibilityTrusted = AXIsProcessTrusted()
     @AppStorage(HotKey.codeKey) private var hotKeyCode: Int = 0
     @AppStorage(HotKey.modifiersKey) private var hotKeyModifiers: Int = 0
+    @AppStorage(PanelPosition.defaultsKey) private var panelPosition: PanelPosition = .topCenter
 
     private var currentLabel: String {
         let code = hotKeyCode == 0 ? HotKey.defaultCode : hotKeyCode
@@ -306,12 +307,21 @@ struct SettingsView: View {
                 }
             }
 
+            Section("Search Panel") {
+                Picker("Position", selection: $panelPosition) {
+                    ForEach(PanelPosition.allCases, id: \.self) { preset in
+                        Text(preset.label).tag(preset)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+
             Section("About") {
                 LabeledContent("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
                 LabeledContent("Bundle ID", value: Bundle.main.bundleIdentifier ?? "")
             }
         }
         .formStyle(.grouped)
-        .frame(width: 400, height: isAccessibilityTrusted ? 340 : 420)
+        .frame(width: 400, height: isAccessibilityTrusted ? 410 : 490)
     }
 }
