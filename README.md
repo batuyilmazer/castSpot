@@ -4,7 +4,7 @@ castSpot, macOS için global kısayol (Spotlight/Raycast benzeri) ile çalışan
 
 - **Platform**: macOS 26.2+
 - **Arayüz**: Spotlight/Raycast benzeri floating arama paneli
-- **Durum**: Aktif geliştirme (MVP tamamlanmaya yakın)
+- **Durum**: MVP (cilalama yapılıyor)
 
 ---
 

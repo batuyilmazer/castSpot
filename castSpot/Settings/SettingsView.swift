@@ -318,7 +318,7 @@ struct SettingsView: View {
 
             Section("About") {
                 LabeledContent("Version", value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
-                LabeledContent("Bundle ID", value: Bundle.main.bundleIdentifier ?? "")
+                Link("GitHub", destination: URL(string: "https://github.com/batuyilmazer/castSpot")!)
             }
         }
         .formStyle(.grouped)
