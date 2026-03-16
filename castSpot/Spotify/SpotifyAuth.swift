@@ -64,9 +64,11 @@ class SpotifyAuth: ObservableObject {
             return try await refresh(using: stored.refreshToken)
         } catch is CancellationError {
             throw CancellationError()
-        } catch {
+        } catch AuthError.invalidGrant {
             signOut()
             throw AuthError.notAuthenticated
+        } catch {
+            throw error
         }
     }
 
@@ -95,7 +97,11 @@ class SpotifyAuth: ObservableObject {
         req.httpMethod = "POST"
         req.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         req.httpBody = formEncode(body)
-        let (data, _) = try await URLSession.shared.data(for: req)
+        let (data, response) = try await URLSession.shared.data(for: req)
+        if let http = response as? HTTPURLResponse,
+           http.statusCode == 400 || http.statusCode == 401 {
+            throw AuthError.invalidGrant
+        }
         return try JSONDecoder().decode(TokenResponse.self, from: data)
     }
 
@@ -205,6 +211,7 @@ struct StoredTokens: Codable {
 
 enum AuthError: Error {
     case notAuthenticated
+    case invalidGrant
 }
 
 struct SpotifyUser: Decodable {
