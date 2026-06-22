@@ -11,6 +11,7 @@
 		884382D32F66D4D300916CC0 /* castSpot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = castSpot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		884382E32F66D50000916CC0 /* castSpot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = castSpot.xcodeproj; sourceTree = "<group>"; };
 		884383172F66DAA200916CC0 /* castSpot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = castSpot.xcodeproj; sourceTree = "<group>"; };
+		88ECB59C2FE83ED700BD31E0 /* castSpot.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = castSpot.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -63,6 +64,13 @@
 			sourceTree = "<group>";
 		};
 		884383192F66DAA200916CC0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		88ECB5A22FE83ED700BD31E0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -129,6 +137,10 @@
 				{
 					ProductGroup = 881D18A42F66E33C00C66BA1 /* Products */;
 					ProjectRef = 881D18A02F66E33C00C66BA1 /* castSpot.xcodeproj */;
+				},
+				{
+					ProductGroup = 88ECB5A22FE83ED700BD31E0 /* Products */;
+					ProjectRef = 88ECB59C2FE83ED700BD31E0 /* castSpot.xcodeproj */;
 				},
 				{
 					ProductGroup = 884382E52F66D50000916CC0 /* Products */;
@@ -289,10 +301,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = castSpot/castSpot.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3GH385Y5FL;
+				DEVELOPMENT_TEAM = 7Y566H6WC6;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -320,10 +333,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = castSpot/castSpot.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3GH385Y5FL;
+				DEVELOPMENT_TEAM = 7Y566H6WC6;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;

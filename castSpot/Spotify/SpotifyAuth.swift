@@ -8,8 +8,8 @@ class SpotifyAuth: ObservableObject {
     static let shared = SpotifyAuth()
 
     // MARK: - Replace with your Spotify app's Client ID from developer.spotify.com
-    private let clientID = "81dfea34ee154383a3c01260cb5fe340"
-    private let redirectURI = "castspot://callback"
+    private let clientID = "1d5cc6383888411cbe268bbcd00164cb"
+    private let redirectURI = "castspot://auth/callback"
     private let scopes = "user-read-playback-state user-modify-playback-state"
 
     @Published var isAuthenticated = false
